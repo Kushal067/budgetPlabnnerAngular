@@ -1,0 +1,26 @@
+<igx-input-group type="search" class="search">
+  <igx-prefix>
+      <igx-icon>search</igx-icon>
+  </igx-prefix>
+  <input  igxInput placeholder="enter username or Name" [(ngModel)]="searchContact" (ngModelChange)="searchUser(searchContact)" >
+
+</igx-input-group>
+<igx-list *ngIf="users">
+  <igx-list-item igxRippleTarget=".igx-list__item-content" #item *ngFor="let user of users " style="background-color: lavenderblush;">
+    <span class="row" *ngIf="user.username!=userLoggedIn.username">
+      <!--<i *ngIf="!user.toAdd"  class="fa fa-plus-square-o fa-lg fa-fw" (click)="addToContact(user)" style="color: green; margin-top: 15px;"  aria-hidden="true"></i>
+      <i *ngIf="user.toAdd" class="fa fa-minus-square-o fa-lg fa-fw" style="color: red; margin-top: 15px;" aria-hidden="true"></i>-->
+      <span (click)="addToContact(user); user.toAdd=!user.toAdd">
+        <i class="fa fa-plus-square-o fa-lg fa-fw" *ngIf="!user.toAdd" style="color: green; margin-top: 15px;"></i>
+        <i class="fa fa-minus-square-o fa-lg fa-fw" *ngIf="user.toAdd" style="color: red; margin-top: 15px;"></i>
+      </span>
+      <span igxListLineTitle style="padding-left: 20px;" >{{ user.name|titlecase }}<div style="font-size: small;">{{user.username}}</div></span>
+   <!-- <igx-icon *ngIf="user.toAdd" family="filter-icons" igxListAction [color]="user.toAdd ? 'red' : 'green'" >check_circle</igx-icon>
+    <igx-icon *ngIf="!user.toAdd" family="filter-icons" igxListAction [color]="user.toAdd ? 'red' : 'green'" >check_circle</igx-icon>-->
+
+   </span>
+
+  </igx-list-item>
+
+</igx-list>
+

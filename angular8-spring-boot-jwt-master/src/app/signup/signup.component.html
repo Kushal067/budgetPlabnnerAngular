@@ -1,0 +1,66 @@
+<div class="card">
+  <h4 class="card-header">Register</h4>
+  <div class="card-body">
+      <form  [formGroup]="form"  (ngSubmit)="onSubmit()">
+
+          <mat-form-field style="width: 100%;"  appearance = "outline">
+            <mat-label><i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i> Name</mat-label>
+            <input matInput placeholder="Name" [type]="hide ? 'name' : 'text'" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" required>
+
+            <mat-error  *ngIf="submitted && f.name.errors" >
+              <mat-error *ngIf="f.name.errors.required">Name is required</mat-error>
+              <mat-error *ngIf="f.name.errors.minlength">Name must be at least 3 characters</mat-error>
+              <mat-error *ngIf="f.name.errors.maxlength">Name can't be more than 20 characters</mat-error>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field  style="width: 100%; "  appearance = "outline">
+            <mat-label><i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i> Mobile</mat-label>
+            <input matInput placeholder="Mobile" [type]="hide ? 'mobile' : 'text'" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" required>
+            <mat-error *ngIf="submitted && f.mobile.errors" >
+              <mat-error *ngIf="f.mobile.errors.required">Mobile number is required</mat-error>
+              <mat-error *ngIf="f.mobile.errors.maxlength||f.mobile.errors.minlength">invalid mobile number enter a 10 digit mobile number</mat-error>
+            </mat-error>
+          </mat-form-field>
+
+        <mat-form-field style="width: 100%; "  appearance = "outline">
+          <mat-label><i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i> Email</mat-label>
+          <input matInput placeholder="Email" [type]="hide ? 'email' : 'text'" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" required>
+          <mat-error *ngIf="submitted && f.email.errors" >
+            <mat-error *ngIf="f.email.errors.required">Email is required</mat-error>
+            <mat-error *ngIf="f.email.errors.email">invalid email</mat-error>
+          </mat-error>
+        </mat-form-field>
+
+          <mat-form-field style="width: 100%; "  appearance = "outline">
+            <mat-label> UserName</mat-label>
+            <input matInput placeholder="Username" [type]="hide ? 'username' : 'text'" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required>
+            <mat-hint *ngIf="!f.username.value">Username must be unique</mat-hint>
+            <mat-error *ngIf="submitted && f.username.errors" >
+              <mat-error *ngIf="f.username.errors.required">Username is required</mat-error>
+              <mat-error *ngIf="f.username.errors.minlength">Username must be at least 4 characters</mat-error>
+              <mat-error *ngIf="f.username.errors.maxlength">Username can't be more than 20 characters</mat-error>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%;"  appearance = "outline">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" required>
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+           <mat-error *ngIf="submitted && f.password.errors" >
+            <mat-error *ngIf="f.password.errors.required">Password is required</mat-error>
+            <mat-error *ngIf="f.password.errors.minlength">Password must be at least 6 characters</mat-error>
+            <mat-error *ngIf="f.password.errors.maxlength">Password can't be more than 20 characters</mat-error>
+          </mat-error>
+          </mat-form-field>
+
+          <div class="form-group">
+              <button mat-raised-button [disabled]="loading" class="btn btn-primary" color="primary">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                  Sign Up
+              </button>
+              <a routerLink="../login" class="btn btn-link">Cancel</a>
+          </div>
+      </form>
+  </div>
+</div>

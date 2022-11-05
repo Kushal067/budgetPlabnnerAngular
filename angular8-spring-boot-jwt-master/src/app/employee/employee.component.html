@@ -1,0 +1,31 @@
+<table mat-table [dataSource]="employees" class="mat-elevation-z8">
+  <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let employee"> {{employee.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="designation">
+      <th mat-header-cell *matHeaderCellDef> Mobile </th>
+     <td mat-cell *matCellDef="let employee">
+      <img  [src]="'data:image/jpg;base64,'+employee.profilePicture.picByte" width="100" height="100"  />
+      </td>
+  </ng-container>
+
+  <ng-container matColumnDef="toAdd">
+    <th mat-header-cell *matHeaderCellDef> toAdd </th>
+    <td mat-cell *matCellDef="let employee">
+
+      <igx-icon family="filter-icons" igxListAction [color]="employee.toAdd ? 'green' : 'lightgray'" (click)="toggleFavorite(employee)">check_circle</igx-icon>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let employee"><button class="btn btn-danger" (click)="deleteEmployee(employee)"> Delete Employee</button> </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<button class="btn btn-danger" (click)="print()">print</button>

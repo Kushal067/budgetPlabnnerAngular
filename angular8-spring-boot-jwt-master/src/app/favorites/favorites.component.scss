@@ -1,0 +1,70 @@
+:host {
+  display: block;
+  padding: 0px;
+}
+
+.list-sample {
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+      0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+      0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+
+.density-chooser {
+  margin-bottom: 16px;
+}
+
+igx-icon {
+cursor: pointer;
+}
+
+.item-container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.contact {
+display: flex;
+flex: 1 0 240px;
+align-items: center;
+
+&__info {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-left: 24px;
+}
+}
+
+.name {
+font-weight: 600;
+}
+
+.phone {
+font-size: 0.875em;
+line-height: 1;
+}
+
+.search {
+  margin-bottom: 16px;
+}
+.float {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+  font-size: 13px;
+  color:white;
+  text-align: center;
+  background-color: #002fa7;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  margin:0 5px;
+}
+.custom-control custom-switch{
+  float: right;
+}
+

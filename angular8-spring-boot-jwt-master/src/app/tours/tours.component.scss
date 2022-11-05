@@ -1,0 +1,121 @@
+:host {
+  display: block;
+  padding: 0px;
+}
+
+.list-sample {
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+      0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+      0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+
+.density-chooser {
+  margin-bottom: 16px;
+}
+
+igx-icon {
+cursor: pointer;
+float: right;
+}
+
+.item-container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.contact {
+display: flex;
+flex: 1 0 240px;
+align-items: center;
+
+&__info {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-left: 24px;
+}
+}
+
+.name {
+font-weight: 600;
+}
+
+.phone {
+font-size: 0.875em;
+line-height: 1;
+}
+
+.search {
+  margin-bottom: 16px;
+}
+.float {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+  font-size: 13px;
+  color:white;
+  text-align: center;
+  background-color: #002fa7;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  margin:0 5px;
+}
+.custom-control custom-switch{
+  float: right;
+}
+.list-row{
+ min-height:2cm;
+  border-bottom: 1px solid thistle;
+}
+.float {
+  position: fixed;
+  bottom: 0.5rem;
+  right: 7.5rem;
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+  font-size: 13px;
+  color:white;
+  text-align: center;
+  background-color: #3f51b5;
+  width: 120px;
+  height: 25px;
+  line-height: 25px;
+  border-radius: 15px;
+  margin:0 5px;
+}
+.btn-group button {
+  background-color:#72A0C1; /* Green background */
+  border: 1px solid white; /* Green border */
+  color: white; /* White text */
+  padding: 6px 6px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+  border-radius: 7px;
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: lavender;
+  color:  #1a1f71;
+
+}
+
+
+

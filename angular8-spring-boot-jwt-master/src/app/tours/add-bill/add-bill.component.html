@@ -1,0 +1,82 @@
+<div class="card">
+  <h4 class="card-header" style="font-size: large;text-align: center; margin-top: -3px;"><b>{{tour.name}} >Add Bill</b></h4>
+  <mat-spinner *ngIf="!participants"></mat-spinner>
+
+  <div class="card-body">
+      <form  [formGroup]="form"  (ngSubmit)="onSubmit()">
+
+          <mat-form-field style="width: 100%; margin-top: -5px; "  appearance = "outline">
+            <mat-label>Amount spent</mat-label>
+            <input matInput placeholder="Amount spent" [type]="hide ? 'amount_Spent' : 'text'" formControlName="amount_Spent" [ngClass]="{ 'is-invalid': submitted && f.amount_Spent.errors }" required>
+
+            <mat-error  *ngIf="submitted && f.amount_Spent.errors" >
+              <mat-error *ngIf="f.amount_Spent.errors.required">required</mat-error>
+              <mat-error *ngIf="f.amount_Spent.errors.pattern">enter a nummeric value upto 2 decimals</mat-error>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%;"  appearance = "outline">
+            <mat-label> Bill Note</mat-label>
+            <input matInput placeholder="add note" [type]="hide ? 'bill_note' : 'text'" formControlName="bill_note" [ngClass]="{ 'is-invalid': submitted && f.bill_note.errors }" >
+
+            <mat-error  *ngIf="submitted && f.bill_note.errors" >
+
+              <mat-error *ngIf="f.bill_note.errors.minlength">must be at least 3 characters</mat-error>
+              <mat-error *ngIf="f.bill_note.errors.maxlength">can't be more than 20 characters</mat-error>
+            </mat-error>
+          </mat-form-field>
+          <!--contact list -->
+          <div class="container" style=" margin-top: -30px;" >
+            <p>select people to add bill on*</p>
+          <igx-input-group type="search" class="search">
+            <igx-prefix>
+                <igx-icon>search</igx-icon>
+            </igx-prefix>
+
+
+            <input #search igxInput style="margin-bottom: 15px;" placeholder="Search to select" [(ngModel)]="searchContact" [ngModelOptions]="{standalone: true}">
+            <igx-suffix *ngIf="search.value.length > 0" (click)="searchContact = null">
+                <igx-icon >clear</igx-icon>
+            </igx-suffix>
+          </igx-input-group>
+
+
+            <igx-list  *ngIf="participants.length>0" style="margin-top: 15px;">
+                <igx-list-item isHeader="true" style="color: #002fa7; margin-left: 10px; ">
+                  <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
+                  Contacts
+                  <span style="margin-left: 15%;padding-right: 10px;" class="custom-control custom-switch" >
+                    <input type="checkbox" (click)="selectAll()"  class="custom-control-input" id="customSwitches" >
+                    <label class="custom-control-label" for="customSwitches" style="padding-top: 3px;">Select All</label>
+
+                  </span>
+                  <span style="margin-left: 20%;">Select</span>
+                </igx-list-item>
+                <div class="list-sample" style="max-height:250px; overflow-y: scroll;">
+                <igx-list-item igxRipple [style.background-color] = "contact.toAdd  ? 'rgba(0, 0, 0, 0.07)' : ''" igxRippleTarget=".igx-list__item-content" #item *ngFor="let contact of participants | igxFilter: filterContacts |orderBy :'name';let i= index">
+                  <!--<igx-avatar  igxListThumbnail   [src]="'data:image/jpg;base64,'+contact.profilePicture.picByte" roundShape="true"></igx-avatar>-->
+                    <span igxListLineTitle  >{{ contact.name|titlecase }}<div style="font-size: small;">{{contact.username}}</div></span>
+                    <igx-icon  family="filter-icons" igxListAction [color]="contact.toAdd ? 'blue' : 'lightgray'" (click)="toggleFavorite(contact)" style="margin-right: 20px;">check_circle</igx-icon>
+                </igx-list-item>
+              </div>
+            </igx-list>
+            <igx-list *ngIf="participants.length==0">
+              <ng-template igxEmptyList>
+                  <p class="empty">No contacts! :(</p>
+              </ng-template>
+            </igx-list>
+            {{errMess}}
+
+        </div>
+
+          <div class="form-group">
+              <button mat-raised-button [disabled]="loading" class="btn btn-primary"
+              style="text-align: center; margin-left: 35%; margin-top: 7px;"
+              color="primary">
+                  <i class="fa fa-credit-card" aria-hidden="true"></i>
+                  Add Bill
+              </button>
+          </div>
+      </form>
+  </div>
+</div>

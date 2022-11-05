@@ -1,0 +1,95 @@
+<div *ngIf="loading">
+  <mat-spinner style="margin-left: 35%;"></mat-spinner>
+</div>
+<div class="list-sample" *ngIf="!loading">
+  <igx-input-group type="search" class="search">
+    <igx-prefix class="searchbox">
+        <igx-icon>search</igx-icon>
+    </igx-prefix>
+
+    <input #search igxInput placeholder="Search Tours" [(ngModel)]="searchTour">
+    <igx-suffix *ngIf="search.value.length > 0" (click)="searchContact = null">
+        <igx-icon >clear</igx-icon>
+    </igx-suffix>
+  </igx-input-group>
+
+  <igx-list *ngIf="myTours.length>0"  >
+    <igx-list-item isHeader="true" style="color: #002fa7; margin-left: 10px;">
+      <i class="fa fa-plane fa-2x" aria-hidden="true"></i>
+      Tours
+      <span style="margin-left: 38%;" class="custom-control custom-switch" >
+        <mat-form-field>
+          <i class="fa fa-filter fa-lg fa-fw" aria-hidden="true"></i>
+          <mat-select [(ngModel)]="sortToursBy" (selectionChange)="filterTour(sortToursBy)" >
+            <mat-option  *ngFor="let tour of tourStatus" [value]="tour.value"  >
+              {{tour.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </span>
+    </igx-list-item>
+    <igx-list-item igxRippleTarget=".igx-list__item-content"
+    igxRipple [style.background-color] = "tour.openTourDetail  ? 'rgba(0, 0, 0, 0.07)' : ''"
+    #item *ngFor="let tour of myToursCopy| igxFilter: filterTours|orderBy:'date' ;let i= index" class="list-row"
+   >
+
+    <span igxListLineTitle   (click)="openTourDetails(tour)">
+     <span style="font-size: larger;">
+      <b style="font-size: larger;">{{ tour.name|titlecase }}</b>
+      <span *ngIf="tour.description" style="font-size: medium;">-{{tour.description}}</span>
+    </span>
+      <div style="font-size: small;">
+        {{tour.date|date:'MMMM d, y, h:mm a ':'+1100'}}
+      </div>
+      <i igx igxListAction class="fa fa-times-circle fa-lg fa-fw" *ngIf="tour.openTourDetail" (click)="closeTourDetail(tour)"
+       style="color: red; float: right; margin-top: -25px;">
+      </i>
+    </span>
+      <span igxListLineTitle >
+      <div *ngIf="tour.openTourDetail" >
+        <igx-list >
+          <mat-card-actions>
+           <!-- <button mat-raised-button class="Tour-Button"  color="primary">Add Bill</button>
+            <button mat-raised-button class="Tour-Button" routerLink="/signup" style="color:blue; background-color:gainsboro;">View Details</button>
+            <button mat-raised-button class="Tour-Button" color="primary">End Tour</button>-->
+            <div class="btn-group" style="width:94%; margin-left: 3%; margin-right: 3%;">
+              <button  style="width:33.3%; font-size: small;" [routerLink]="[tour.id,'addBill']" >Add New Bill</button>
+              <button style="width:33.3%; font-size: small;" [routerLink]="[tour.id,'viewDetails']">View Details</button>
+              <button *ngIf="tour.active" style="width:33.3%;font-size: small;" (click)="endTour(tour)">End Tour</button>
+            </div>
+          </mat-card-actions>
+
+          <igx-list-item isHeader="true" style="color: #1a1f71;" >
+            <span style="width:40%; text-align: left;">Name</span>
+            <span style="width: 30%; text-align: center;">Balance</span>
+            <span style="width: 30%; text-align: center;">Amount Spent</span>
+          </igx-list-item>
+          <span layout="row"><hr flex/><hr flex/></span>
+          <div style="max-height: 250px; overflow-y: scroll;">
+
+          <igx-list-item *ngFor="let bal of tour.balance" >
+            <span style="width: 40%;text-align: left">
+              <b style="font-size: medium;">{{ bal.user.name|titlecase }}</b>
+              <div style="font-size: small;text-align: left">{{bal.user.username}}</div>
+            </span>
+            <div style="width: 30%; text-align: center; font-size: small;" [style.color] = "bal.balance>=0? 'green' : 'red'" >{{ bal.balance |currency:'₹':'code' }}</div>
+            <div style="width: 30%; text-align: center;font-size: small"> {{bal.totalAmountSpent|currency:'₹':'code'}}</div>
+          </igx-list-item>
+        </div>
+        </igx-list>
+
+      </div>
+    </span>
+    </igx-list-item>
+    <hr width=100%>
+  </igx-list>
+  <igx-list *ngIf="myTours.length==0">
+    <ng-template igxEmptyList>
+        <p class="empty">You are not part of any tours currently</p>
+    </ng-template>
+  </igx-list>
+  <mat-spinner *ngIf="!myTours"></mat-spinner>
+  <div class="float" routerLink="/createTour" >
+    <i class="fa fa-plane fa-1x"  aria-hidden="true">Create New Tour</i>
+  </div>
+</div>

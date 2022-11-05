@@ -1,0 +1,59 @@
+<!-- <mat-toolbar color="primary" class="page-container">
+    <mat-toolbar-row>
+        <span><a mat-button href="https://www.techgeeknext.com" style="font-size: larger;">TechGeekNext</a></span>
+        <span class="example-fill-remaining-space"></span>
+        <span class="align-center"></span>
+        <span class="example-spacer"></span>
+        <a mat-button *ngIf="!loginService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a>
+        <a mat-button *ngIf="loginService.isUserLoggedIn()" routerLink="/" class="nav-link">View Employees</a>
+        <a mat-button *ngIf="loginService.isUserLoggedIn()" routerLink="/addemployee" class="nav-link">Add New Employee</a>
+        <a mat-button *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a>
+    </mat-toolbar-row>
+</mat-toolbar> -->
+<div class="page-container" style="overflow-x: hidden;">
+  <header>
+    <div>
+      <button mat-button class="menu-button" (click)="sidenav.toggle()">
+        <mat-icon>{{ isMenuOpen ? 'menu_open' : 'menu' }}</mat-icon>
+      </button>
+
+      <a routerLink="/">
+        <span class="app-title">Budget Planner App</span>
+      </a>
+
+      <igx-avatar *ngIf="loginService.isUserLoggedIn()&& loginService.getUserProfilepicture()" igxListThumbnail routerLink="/my-details" style="margin-right: 70px; position: absolute; top: 10px; right: 10px; "  [src]="'data:image/jpg;base64,'+loginService.getUserProfilepicture()" roundShape="true"></igx-avatar>
+      <igx-avatar *ngIf="loginService.isUserLoggedIn()&& !loginService.getUserProfilepicture()" igxListThumbnail routerLink="/my-details" icon="person"  roundShape="true" style="margin-right: 70px; position: absolute; top: 10px; right: 10px; "></igx-avatar>
+    </div>
+    <a mat-button style="margin-right: -30px; margin-top: -5px;" *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">
+      <i class="fa fa-sign-out" aria-hidden="true"></i>
+        Logout
+    </a>
+  </header>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav autoFocus="false" mode="over" [(opened)]="isMenuOpen" class="sidenav"
+    (click)="onSidenavClick()">
+      <a mat-button (click)="onSidenavClick()" routerLink="/contacts">
+        <i class="fa fa-address-book" aria-hidden="true"></i>
+        Contacts
+      </a>
+      <a mat-button  (click)="onSidenavClick()" routerLink="/tours">
+        <i class="fa fa-plane" aria-hidden="true"></i> My Tours
+      </a>
+      <a mat-button  (click)="onSidenavClick()" routerLink="/createTour">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Create New Tour
+      </a>
+      <a mat-button *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">
+        <i class="fa fa-sign-out" aria-hidden="true"></i>
+          LogOut
+      </a>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+</div>
+

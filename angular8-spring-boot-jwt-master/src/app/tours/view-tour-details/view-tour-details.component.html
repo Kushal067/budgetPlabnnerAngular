@@ -1,0 +1,105 @@
+
+<div class="card" *ngIf="!loading">
+  <h4 class="card-header" style="margin-top: -3px; text-align: center;">
+    <b style="font-size:x-large; margin-left: 15px; ">{{tour.name|titlecase}}</b>
+    <span *ngIf="tour.description" style="font-size: medium ">-{{tour.description}}</span><br/>
+    <span style="font-size: small;"> CreatedBy-
+      <span style="font-size: small"> @{{tour.createdBy.username}}</span><br/>
+      <span style="font-size: small;margin-top: -20px;">On :{{tour.date|date:'MMMM d, y, h:mm a ':'+1100'}}</span>
+    </span>
+  </h4>
+  <div class="card-body">
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="true" style="width: 110%; margin-left: -5%;">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <b>Participants</b>
+          </mat-panel-title>
+          <mat-panel-description>
+
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-grid-list cols="2" rowHeight="120px" style="max-height: 280px; overflow-y: scroll;" *ngIf="participants">
+          <mat-grid-tile *ngFor="let contact of participants" >
+            <img *ngIf="contact.profilePicture.picByte" height="120" [src]="'data:image/jpg;base64,'+contact.profilePicture.picByte" alt={{contact.name}}>
+            <igx-avatar *ngIf="!contact.profilePicture.picByte" igxListThumbnail routerLink="/my-details" icon="person"
+              style="width: 130px;height: 120px;"></igx-avatar>
+            <mat-grid-tile-footer style="height: 40px;" >
+              <h1 style="margin-bottom: 12px; font-family: Bodoni MT;" matLine>{{contact.name | uppercase}}</h1>
+            </mat-grid-tile-footer>
+            <mat-grid-tile-footer style="height: 20px;background-color:transparent;">
+              <p style="font-size: small;">@{{contact.username}}</p>
+            </mat-grid-tile-footer>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+
+      </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion>
+      <mat-expansion-panel style="width: 110%; margin-left: -5%;">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <b>View Balance</b>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <igx-list >
+          <mat-card-actions>
+            <div class="btn-group" style="width:94%; margin-left: 3%; margin-right: 3%;">
+              <button  style="width:50%; font-size: small;" [routerLink]="['../../',tour.id,'addBill']" >Add New Bill</button>
+              <button style="width:50%;font-size: small; ">End Tour</button>
+            </div>
+          </mat-card-actions>
+
+          <igx-list-item isHeader="true" style="color: #1a1f71;" >
+            <span style="width:40%; text-align: left;">Name</span>
+            <span style="width: 30%; text-align: center;">Balance</span>
+            <span style="width: 30%; text-align: center;">Amount Spent</span>
+          </igx-list-item>
+          <span layout="row"><hr flex/><hr flex/></span>
+          <div style="max-height: 250px; overflow-y: scroll;">
+
+          <igx-list-item *ngFor="let bal of tour.balance" style="max-height: 65px;" >
+            <span style="width: 40%;text-align: left">
+              <b style="font-size: small;">{{ bal.user.name|titlecase }}</b>
+              <div style="font-size: small;text-align: left">@{{bal.user.username}}</div>
+            </span>
+            <div style="width: 30%; text-align: center; font-size: small;" [style.color] = "bal.balance>=0? 'green' : 'red'" >{{ bal.balance |currency:'₹':'code' }}</div>
+            <div style="width: 30%; text-align: center;font-size: small"> {{bal.totalAmountSpent|currency:'₹':'code'}}</div>
+          </igx-list-item>
+          <span style="float: right; margin-right: 27px;font-size: small">Total: {{tour.balance|columnTotal:'totalAmountSpent'|currency:'₹':'code'}}</span>
+        </div>
+        </igx-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-accordion>
+      <mat-expansion-panel  style="width: 110%; margin-left: -5%;">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <b>Expenditure</b>
+          </mat-panel-title>
+          <mat-panel-description>
+
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <igx-list>
+          <div style="max-height: 350px; overflow-y: scroll; width: 110%; margin-left: -5%;">
+        <igx-list-item igxRipple  igxRippleTarget=".igx-list__item-content" #item *ngFor="let expenditure of tour.expenditure|reverse;let i = index">
+            <span igxListLineTitle  ><span style="font-weight: bold; font-size: large;">{{i+1}}.</span>
+            {{expenditure.amountSpent|currency:'₹':'code'}} spent by @{{ expenditure.spentBy.username }}
+              <span *ngIf="expenditure.billNote" >for <b>{{expenditure.billNote}}</b>
+              </span> on <span *ngFor="let user of expenditure.splitBillOn">@{{user.username}}, </span>
+             <span>on <b>{{expenditure.billDate|date:'MMMM d, y, h:mm a ':'+530'}}</b>  </span>
+            </span>
+        </igx-list-item>
+      </div>
+      </igx-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+ </div>
+
+ <div  *ngIf="loading">
+  <mat-spinner style="margin-left: 35%;"></mat-spinner>
+</div>

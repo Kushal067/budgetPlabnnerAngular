@@ -1,0 +1,51 @@
+
+
+<!--<div class="density-chooser">
+  <igx-buttongroup [values]="displayDensities" (selected)="selectDensity($event)"></igx-buttongroup>
+</div>-->
+
+<igx-input-group type="search" class="search">
+  <igx-prefix>
+      <igx-icon>search</igx-icon>
+  </igx-prefix>
+
+
+  <input #search igxInput placeholder="Search Contacts" [(ngModel)]="searchContact">
+  <igx-suffix *ngIf="search.value.length > 0" (click)="searchContact = null">
+      <igx-icon >clear</igx-icon>
+  </igx-suffix>
+</igx-input-group>
+
+<div class="list-sample" >
+  <igx-list [displayDensity]="density" *ngIf="favorites.length>0">
+      <igx-list-item isHeader="true" style="color: #002fa7; margin-left: 10px;">
+        <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
+        Contacts
+        <span style="margin-left: 38%;" class="custom-control custom-switch" >
+          <input type="checkbox" (click)="deleteContactsToggle()"  class="custom-control-input" id="customSwitches" >
+          <label class="custom-control-label" for="customSwitches" style="padding-top: 3px;">Delete</label>
+        </span>
+      </igx-list-item>
+
+      <igx-list-item igxRipple [style.background-color] = "contact.toAdd  ? 'rgba(0, 0, 0, 0.07)' : ''" igxRippleTarget=".igx-list__item-content" #item *ngFor="let contact of favorites | igxFilter: filterContacts |orderBy :'name';let i= index">
+         <!-- <div [style]="contact.toAdd ?'background-color: yellow':''">-->
+        <igx-avatar  igxListThumbnail *ngIf="!contact.initials"  [src]="'data:image/jpg;base64,'+contact.profilePicture.picByte" roundShape="true"></igx-avatar>
+
+        <igx-avatar *ngIf="contact.initials"  initials={{contact.initials}} roundShape="true"></igx-avatar>
+        <span igxListLineTitle  >{{ contact.name|titlecase }}<div style="font-size: small;">{{contact.username}}</div></span>
+
+          <i class="fa fa-trash fa-lg fa-fw" *ngIf="deleteContactsFlag" (click)="deleteContacts(contact)" style="color: red;"></i>
+      </igx-list-item>
+  </igx-list>
+  <igx-list *ngIf="favorites.length==0">
+    <ng-template igxEmptyList>
+        <p class="empty">No contacts! :(</p>
+    </ng-template>
+  </igx-list>
+  {{errMess}}
+  <div class="float" routerLink="/search-users" >
+    <i class="fa fa-user-plus fa-1x"  aria-hidden="true"></i>
+  </div>
+
+</div>
+
